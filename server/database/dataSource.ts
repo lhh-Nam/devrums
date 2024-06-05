@@ -1,5 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mssql',
@@ -16,6 +17,3 @@ export const dataSourceOptions: DataSourceOptions = {
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
 };
-
-const dataSource = new DataSource(dataSourceOptions);
-export default dataSource;
