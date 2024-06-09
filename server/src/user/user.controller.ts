@@ -14,13 +14,19 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { FilterUserDto } from './dto/filterUser.dto';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
+@ApiBearerAuth()
 @Controller('user')
 @UseGuards(AuthGuard)
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
+  @ApiQuery({ name: 'page' })
+  @ApiQuery({ name: 'itemsPerPage' })
+  @ApiQuery({ name: 'search' })
   findAll(@Query() query: FilterUserDto): Promise<User[]> {
     return this.userService.findAll(query);
   }
