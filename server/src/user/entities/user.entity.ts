@@ -25,8 +25,11 @@ export class User {
   @Column({ default: 1 })
   status: number;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   refreshToken: string;
+
+  @Column({ nullable: true, default: null })
+  avatar: string;
 
   @CreateDateColumn()
   createdOn: Date;
