@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { User } from './entities/user.entity';
@@ -12,15 +13,16 @@ import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { FilterUserDto } from './dto/filterUser.dto';
 
 @Controller('user')
+@UseGuards(AuthGuard)
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(AuthGuard)
   @Get()
-  findAll(): Promise<User[]> {
-    return this.userService.findAll();
+  findAll(@Query() query: FilterUserDto): Promise<User[]> {
+    return this.userService.findAll(query);
   }
 
   @Get(':id')
