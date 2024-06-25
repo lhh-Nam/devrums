@@ -2,7 +2,10 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
+  Param,
   Post,
+  Query,
   Req,
   UploadedFile,
   UseGuards,
@@ -13,6 +16,8 @@ import { CreatePostDto } from './dto/createPost.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileFilter, storageConfig } from 'helpers/config';
 import { PostService } from './post.service';
+import { FilterPostDto } from './dto/filterPost.dto';
+import { Post as PostEntity } from './entities/post.entity';
 
 @Controller('post')
 @UseGuards(AuthGuard)
@@ -43,5 +48,15 @@ export class PostController {
       thumbnail: file.destination + '/' + file.filename,
     };
     return this.postService.createPost(req.user_data.id, newPost);
+  }
+
+  @Get()
+  findAll(@Query() query: FilterPostDto): Promise<any> {
+    return this, this.postService.findAll(query);
+  }
+
+  @Get(':id')
+  findDetail(@Param('id') id: string): Promise<PostEntity> {
+    return this, this.postService.findDetail(Number(id));
   }
 }
