@@ -19,7 +19,7 @@ export default function Home() {
             <br />
             <h1 className={title()}>at the moment.</h1>
             <h2 className={subtitle({ class: "mt-4" })}>
-              Beautiful, fast and modern React UI library.
+              Add sub title here...
             </h2>
           </div>
         </div>
