@@ -1,12 +1,37 @@
-import { useState } from "react";
-import { Button } from "@nextui-org/button";
+"use client";
+
+import { Divider } from "@nextui-org/react";
+import NextLink from "next/link";
+
+const sidebarRedirects = [
+  {
+    label: "Book review",
+    href: "/admin/book-review",
+  },
+];
+
+interface ISidebarItem {
+  label: string;
+  href: string;
+}
 
 export const Sidebar = () => {
-  const [count, setCount] = useState(0);
+  const renderSidebarItem = (sidebarItem: ISidebarItem) => {
+    const { label, href } = sidebarItem;
+    return (
+      <div key={label}>
+        <NextLink color="foreground" href={href}>
+          {label}
+        </NextLink>
+
+        <Divider className="my-4" />
+      </div>
+    );
+  };
 
   return (
-    <Button radius="full" onPress={() => setCount(count + 1)}>
-      Count is {count}
-    </Button>
+    <div className="h-full">
+      {sidebarRedirects.map((m) => renderSidebarItem(m))}
+    </div>
   );
 };
